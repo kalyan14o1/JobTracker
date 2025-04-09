@@ -7,12 +7,19 @@ from job_utils.status_manager import JobStatusManager
 
 def root_redirect(request):
     if request.user.is_authenticated:
-        return redirect('jobs:index')  
-    return redirect('login')  
+        return redirect('jobs:index')
+    return redirect('login')
 
+@login_required
 def index(request):
     jobs = Job.objects.order_by('-created_at')
-    return render(request, 'jobs/index.html', {'jobs': jobs})
+    status_counts = {
+        'applied': Job.objects.filter(status='applied').count(),
+        'interview': Job.objects.filter(status='interview').count(),
+        'offer': Job.objects.filter(status='offer').count(),
+        'rejected': Job.objects.filter(status='rejected').count(),
+    }
+    return render(request, 'jobs/index.html', {'jobs': jobs, 'status_counts': status_counts})
 
 def show(request, job_id):
     try:
@@ -38,9 +45,13 @@ def update(request, job_id):
     if request.method == 'POST':
         form = JobForm(request.POST, instance=job)
         if form.is_valid():
-            form.save()
-            manager = JobStatusManager(job)
-            manager.update_status(form.cleaned_data['status'])
+            updated_job = form.save()
+            job = Job.objects.get(pk=job_id)
+            try:
+                manager = JobStatusManager(job)
+                manager.update_status(form.cleaned_data['status'])
+            except ValueError as e:
+                print(f"Status update error: {e}")
             return redirect('jobs:index')
     else:
         form = JobForm(instance=job)
@@ -61,7 +72,7 @@ def profile(request):
         profile = UserProfile.objects.create(
             user=request.user,
             name=request.user.username,
-            email=request.user.email or 'x23419491@student.ncirl.ie',
-            phone_number='08994433723'
+            email=request.user.email or '',
+            phone_number=''
         )
     return render(request, 'jobs/profile.html', {'profile': profile})

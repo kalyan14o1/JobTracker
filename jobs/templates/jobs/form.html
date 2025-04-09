@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Job</title>
+    <title>{% if form.instance.id %}Edit Job{% else %}Add Job{% endif %}</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; }
         form { width: 50%; margin: 20px auto; }
         label, input, select { display: block; margin: 10px 0; }
         input, select { width: 100%; padding: 8px; }
-        button { background-color: #4CAF50; color: white; padding: 10px; border: none; }
+        button { background-color: #4169E1; color: white; padding: 10px; border: none; border-radius: 5px; }
+        button:hover { background-color: #2F4BA0; }
+        a { color: #6A1B9A; text-decoration: none; }
+        a:hover { color: #4A1270; }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Job</h1>
+    <h1 style="text-align: center;">{% if form.instance.id %}Edit Job{% else %}Add Job{% endif %}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
-    <p style="text-align: center;"><a href="{% url 'jobs:index' %}">Back to List</a></p>
+    <p style="text-align: center;"><a href="{% url 'jobs:index' %}">Back to Dashboard</a></p>
 </body>
 </html>
