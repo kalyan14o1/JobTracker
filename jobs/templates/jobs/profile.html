@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - Job Tracker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+        .profile-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            margin: -20px -20px 20px -20px;
+        }
+        .profile-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .profile-details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .profile-details p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .profile-details p strong {
+            color: #4CAF50;
+        }
+        .profile-actions {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .profile-actions a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .btn-dashboard {
+            background-color: #2196F3;
+            color: white;
+        }
+        .btn-dashboard:hover {
+            background-color: #1976D2;
+        }
+        .btn-change-password {
+            background-color: #FFC107;
+            color: white;
+        }
+        .btn-change-password:hover {
+            background-color: #FFB300;
+        }
+        .btn-logout {
+            background-color: #F44336;
+            color: white;
+        }
+        .btn-logout:hover {
+            background-color: #D32F2F;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>Welcome, {{ profile.name }}!</h2>
+        </div>
+        <div class="profile-details">
+            <p><strong>Email:</strong> {{ profile.email }}</p>
+            <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
+        </div>
+        <div class="profile-actions">
+            <a href="{% url 'jobs:index' %}" class="btn-dashboard">Back to Dashboard</a>
+            <a href="{% url 'password_change' %}" class="btn-change-password">Change Password</a>
+            <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

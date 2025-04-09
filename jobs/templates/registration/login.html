@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        form { width: 50%; margin: 20px auto; }
+        label, input { display: block; margin: 10px 0; }
+        input { width: 100%; padding: 8px; }
+        button { background-color: #4CAF50; color: white; padding: 10px; border: none; }
+        .error { color: red; }
+        .forgot { text-align: center; margin-top: 10px; }
+        a { color: #4CAF50; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Login to Job Tracker</h1>
+    {% if form.errors %}
+        <p class="error" style="text-align: center;">Invalid username or password. Please try again.</p>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p class="forgot"><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        table { width: 50%; margin: 20px auto; border-collapse: collapse; }
+        td { padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">{{ job.company }} Details</h2>
+    <table>
+        <tr><td><b>Position:</b></td><td>{{ job.position }}</td></tr>
+        <tr><td><b>Application Date:</b></td><td>{{ job.application_date }}</td></tr>
+        <tr><td><b>Status:</b></td><td>{{ job.status }}</td></tr>
+        <tr><td><b>Status History:</b></td><td>{% for entry in history %}{{ entry }}<br>{% endfor %}</td></tr>
+    </table>
+    <p style="text-align: center;"><a href="{% url 'jobs:index' %}">Back to List</a></p>
+</body>
+</html>

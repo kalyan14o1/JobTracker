@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Tracker</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        a { color: #4CAF50; text-decoration: none; }
+        .nav { text-align: center; margin: 10px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}! | <a href="{% url 'jobs:profile' %}">Profile</a></p>
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a></p>
+        {% endif %}
+    </div>
+    <h1 style="text-align: center;">Job Tracker Dashboard</h1>
+    <p style="text-align: center;"><a href="{% url 'jobs:create' %}">Add New Job</a></p>
+    <table>
+        <tr>
+            <th>Company</th>
+            <th>Position</th>
+            <th>Application Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        {% for job in jobs %}
+        <tr>
+            <td><a href="{% url 'jobs:show' job.id %}">{{ job.company }}</a></td>
+            <td>{{ job.position }}</td>
+            <td>{{ job.application_date }}</td>
+            <td>{{ job.status }}</td>
+            <td>
+                <a href="{% url 'jobs:update' job.id %}">Edit</a> |
+                <a href="{% url 'jobs:delete' job.id %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No jobs found.</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
